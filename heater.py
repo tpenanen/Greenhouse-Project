@@ -31,12 +31,12 @@ def control_heater(readings, setpoints, dt, state) -> float:
     float
         Heater power percent, from 0 to 100.
     """
-    temperature_c = readings.temperature_c
-
-    error = setpoints.temperature_c - temperature_c
+    Kp = 12.0
+    Ki = 0.0015
+    error = abs(setpoints.temperature_c - readings.temperature_c)
     integral = state.get("heater_integral", 0.0)
-    integral = integral + error * dt
-
+    new_integral = integral + error * dt
+    state["heater_integral"] = new_integral
     u = state['heater_total'] = state.get('heater_total', 0.0) + integral
 
     return _clamp(u, 0.0, 100.0)
