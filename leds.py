@@ -30,10 +30,10 @@ def control_leds(readings, setpoints, dt, state) -> float:
         LED intensity percent, from 0 to 100.
     """
     u = 0
-    if (setpoints.is_daytime):
+    if (readings.par_umol_m2_s > 100):
         u = 0
     else:
-        u = 30
+        u = 50
     # TODO: Replace this stub with your Milestone 3 LED design.
     # Your M3 flowchart is the specification. Keep each command in range
     # before you return it:
